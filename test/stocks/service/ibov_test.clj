@@ -23,7 +23,6 @@
       body-keys ["price" "max" "min" "variation" "stock-id" "currency" "time"]
       (none-empty body-values) true)))
 
-
 (deftest invalid-stock
   (is (= (app (mock/request :get "/ibov/invalid"))
          {:status 404

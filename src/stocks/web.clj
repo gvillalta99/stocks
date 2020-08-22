@@ -8,7 +8,6 @@
             [stocks.service.routes :refer [app-routes]])
   (:gen-class))
 
-
 (def app
   (-> app-routes
       (wrap-json-response)
@@ -24,5 +23,3 @@
   (let [port (Integer. (or custom-port (env :port) 5000))]
     (println (str "\n\nRunning server in dev mode on port " port "\n\n"))
     (jetty/run-jetty app {:port port :join? false})))
-
-

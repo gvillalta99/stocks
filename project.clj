@@ -4,18 +4,20 @@
   :year "2020"
   :url "https://github.com/Viglioni/stocks"
   :license {:name "Eclipse Public License v1.0"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+            :url  "http://www.eclipse.org/legal/epl-v10.html"}
+  ;:repositories [["sonatype-oss-public" "https://oss.sonatype.org/content/groups/public/"]]
   :dependencies [[org.clojure/clojure "1.10.0"]
-                 [compojure "1.6.1"]
-                 [ring/ring-jetty-adapter "1.7.1"]
-                 [ring/ring-devel "1.8.1"]
-                 [ring/ring-defaults "0.3.2"]
-                 [metosin/ring-http-response "0.9.1"]
                  [clj-time "0.15.2"]
+                 [com.stuartsierra/component "1.0.0"]
+                 [compojure "1.6.1"]
                  [environ "1.1.0"]
+                 [metosin/ring-http-response "0.9.1"]
                  [org.clojure/data.json "1.0.0"]
-                 [ring/ring-mock "0.4.0"]
-                 [ring/ring-json "0.5.0"]]
+                 [ring/ring-defaults "0.3.2"]
+                 [ring/ring-devel "1.8.1"]
+                 [ring/ring-jetty-adapter "1.7.1"]
+                 [ring/ring-json "0.5.0"]
+                 [ring/ring-mock "0.4.0"]]
   :min-lein-version "2.0.0"
   :plugins [[environ/environ.lein "0.3.1"]
             [lein-ring "0.12.5"]
@@ -25,6 +27,11 @@
   :uberjar-name "stocks-standalone.jar"
   :ring {:handler stocks.web/run-dev}
   :main ^:skip-aot stocks.web
-  :aliases {"test:watch" ["shell" "sh" "scripts/test_dev.sh"]}
-  :profiles {:uberjar {:aot :all}
+  :aliases {"test:watch" ["shell" "sh" "scripts/test_dev.sh"]
+            "dev"        ["with-profile" "+dev""repl"]}
+  :profiles {:uberjar    {:aot :all}
+             :dev        {:dependencies [[lambdaisland/kaocha "1.0.669"]
+                                         [org.clojure/tools.namespace "1.0.0"]]
+                          :repl-options {:init (load-file "dev/repl.clj")
+                                         :init-ns stocks.web}}
              :production {:env {:production true}}})

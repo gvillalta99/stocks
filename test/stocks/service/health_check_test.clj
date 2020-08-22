@@ -3,12 +3,11 @@
             [stocks.web :refer :all]
             [ring.mock.request :as mock]))
 
-
 (deftest health-check
-  (let [res (app (mock/request :get "/health-check"))
-        {status :status headers :headers body :body} res
+  (let [{status :status headers :headers body :body} (app (mock/request :get "/health-check"))
         message (re-find #"It's working!" body)]
     (are [x y] (= x y)
       status 200
       headers {"Content-Type" "application/octet-stream"}
       message "It's working!")))
+
