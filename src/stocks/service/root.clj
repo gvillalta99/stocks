@@ -5,4 +5,4 @@
 (def root
   (context
    "/" []
-   (GET "/" [] (controller/hello-world))))
+   (GET "/" req (controller/hello-world req))))

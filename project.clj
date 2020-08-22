@@ -7,6 +7,7 @@
             :url  "http://www.eclipse.org/legal/epl-v10.html"}
   ;:repositories [["sonatype-oss-public" "https://oss.sonatype.org/content/groups/public/"]]
   :dependencies [[org.clojure/clojure "1.10.0"]
+                 [clj-http "3.10.1"]
                  [clj-time "0.15.2"]
                  [com.stuartsierra/component "1.0.0"]
                  [compojure "1.6.1"]

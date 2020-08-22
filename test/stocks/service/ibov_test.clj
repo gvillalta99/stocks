@@ -11,7 +11,7 @@
    strings))
 
 
-(deftest valid-stock
+#_(deftest valid-stock
   (let [res (app (mock/request :get "/ibov/usim5"))
         {status :status headers :headers } res
         body (json/read-str (:body res))
@@ -23,13 +23,13 @@
       body-keys ["price" "max" "min" "variation" "stock-id" "currency" "time"]
       (none-empty body-values) true)))
 
-(deftest invalid-stock
+#_(deftest invalid-stock
   (is (= (app (mock/request :get "/ibov/invalid"))
          {:status 404
           :headers {"Content-Type" "application/octet-stream"}
           :body "Lost a stock Master Obi-Wan has. How embarrassing.\n"})))
 
-(deftest stockless
+#_(deftest stockless
   (is (= (app (mock/request :get "/ibov"))
          {:status 400
           :headers {"Content-Type" "application/octet-stream"}

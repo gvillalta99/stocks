@@ -1,20 +1,23 @@
 (ns stocks.components.config
   (:require [environ.core :refer [env]]
-            [com.stuartsierra.component :as component]))
+            [com.stuartsierra.component :as c]))
 
 (defrecord Config []
   ;; Implement the Lifecycle protocol
-  component/Lifecycle
+  c/Lifecycle
 
-  (start [component]
+  (start [this]
     (println ";; Start config")
     (let [jetty {:port  (or (some-> (env :port) Integer/parseInt) 5000)
                  :join? false}]
-      (assoc component :jetty jetty)))
+      (assoc this :jetty jetty)))
 
-  (stop [component]
+  (stop [this]
     (println ";; Stopping config")
-    (dissoc component :jetty)))
+    (dissoc this :jetty)))
 
-(defn new-config []
-  (map->Config {}))
+(defn new-config
+  ([]
+   (new-config {}))
+  ([extra-configs]
+   (map->Config extra-configs)))
