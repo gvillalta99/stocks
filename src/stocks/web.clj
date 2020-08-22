@@ -5,7 +5,8 @@
             [ring.middleware.content-type :refer [wrap-content-type]]
             [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
             [ring.middleware.json :refer [wrap-json-response]]
-            [stocks.service.routes :refer [app-routes]])
+            [stocks.service.routes :refer [app-routes]]
+            [stocks.system :as s])
   (:gen-class))
 
 (def app
@@ -15,11 +16,7 @@
       (wrap-defaults api-defaults)))
 
 (defn run-dev [& [custom-port]]
-  (let [port (Integer. (or custom-port (env :port) 5000))]
-    (println (str "\n\nRunning server in dev mode on port " port "\n\n"))
-    (jetty/run-jetty (wrap-reload app) {:port port :join? false})))
+  (s/start! (wrap-reload app)))
 
 (defn -main [& [custom-port]]
-  (let [port (Integer. (or custom-port (env :port) 5000))]
-    (println (str "\n\nRunning server in dev mode on port " port "\n\n"))
-    (jetty/run-jetty app {:port port :join? false})))
+  (s/start! app))
